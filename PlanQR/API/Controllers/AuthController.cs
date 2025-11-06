@@ -16,11 +16,13 @@ namespace API.Controllers
     {
         private readonly LdapService _ldapService;
         private readonly IConfiguration _configuration;
+        private readonly IWebHostEnvironment _environment;
 
-        public AuthController(LdapService ldapService, IConfiguration configuration)
+        public AuthController(LdapService ldapService, IConfiguration configuration, IWebHostEnvironment environment)
         {
             _ldapService = ldapService;
             _configuration = configuration;
+            _environment = environment;
         }
 
         [HttpPost("login")]
@@ -29,6 +31,28 @@ namespace API.Controllers
             if (request == null)
             {
                 return BadRequest(new { message = "Invalid request" });
+            }
+
+            // Bypass LDAP in development mode for admin/admin credentials
+            if (_environment.IsDevelopment() && request.Username == "admin" && request.Password == "admin")
+            {
+                var token = GenerateJwtToken("admin", "Admin", "User", "administrator");
+
+                var cookieOptions = new CookieOptions
+                {
+                    HttpOnly = true,
+                    Secure = Request.IsHttps,
+                    SameSite = SameSiteMode.Strict
+                };
+                Response.Cookies.Append("jwt", token, cookieOptions);
+
+                return Ok(new 
+                { 
+                    message = "Login successful", 
+                    givenName = "Admin", 
+                    surname = "User",
+                    title = "administrator"
+                });
             }
 
             var (isAuthenticated, givenName, surname, title) = _ldapService.Authenticate(request.Username, request.Password);
