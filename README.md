@@ -2,17 +2,14 @@
 
 ## 🐳 Uruchomienie z Docker (Zalecane)
 
-Aby uruchomić aplikację w Dockerze, przejdź do katalogu `PlanQR` i zobacz [DOCKER.md](PlanQR/DOCKER.md) dla szczegółowych instrukcji.
+Aby uruchomić aplikację w Dockerze, zobacz:
+- [DOCKER-QUICKSTART-PL.md](PlanQR/DOCKER-QUICKSTART-PL.md) - Szybki start (Polski)
+- [DOCKER.md](PlanQR/DOCKER.md) - Pełna dokumentacja (English)
 
 **Szybki start:**
 ```bash
 cd PlanQR
-./generate-certs.sh localhost
-cp .env.example .env
-cp client-app/.env.example client-app/.env
-# Edytuj pliki .env i ustaw wymagane wartości
-mkdir -p data
-docker-compose up -d
+./docker-start.sh
 ```
 
 ## Instalacja bez Docker
