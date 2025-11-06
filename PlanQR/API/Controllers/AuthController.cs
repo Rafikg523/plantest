@@ -41,7 +41,7 @@ namespace API.Controllers
                 var cookieOptions = new CookieOptions
                 {
                     HttpOnly = true,
-                    Secure = true,
+                    Secure = Request.IsHttps,
                     SameSite = SameSiteMode.Strict
                 };
                 Response.Cookies.Append("jwt", token, cookieOptions);
