@@ -36,6 +36,3 @@ services:
 networks:
   planqr-network:
     driver: bridge
-
-volumes:
-  data:
