@@ -8,15 +8,25 @@ using Infrastructure.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
-var projectRoot = Directory.GetParent(Directory.GetCurrentDirectory())!.FullName;
-var pfxPath = Path.Combine(projectRoot, "certs", "cert.pfx");
+// Use app base/content directory so path is correct inside container
+var pfxPath = Path.Combine(AppContext.BaseDirectory, "certs", "cert.pfx");
 
 builder.WebHost.ConfigureKestrel(options =>
 {
     options.ListenAnyIP(5000, listenOptions =>
     {
         var certPassword = builder.Configuration["CertificateSettings:PfxPassword"];
-        listenOptions.UseHttps(pfxPath, certPassword);
+        if (File.Exists(pfxPath))
+        {
+            listenOptions.UseHttps(pfxPath, certPassword);
+        }
+        else
+        {
+            var loggerFactory = LoggerFactory.Create(l => { });
+            var logger = loggerFactory.CreateLogger("Program");
+            logger.LogWarning("PFX certificate not found at {PfxPath}. Skipping HTTPS setup in Kestrel.", pfxPath);
+            // Optionally: throw or continue with HTTP only depending on your deployment expectations
+        }
     });
 });
 
