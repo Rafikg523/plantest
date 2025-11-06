@@ -7,6 +7,19 @@
 ✅ **Zero budowania** - używa gotowych obrazów Docker  
 ✅ **Auto-restart** - kontenery same się uruchamiają po aktualizacji  
 
+## Jak to działa?
+
+```
+GitHub Repo → GitHub Actions → GHCR → Watchtower → Twoje kontenery
+(kod)      (buduje obrazy) (przechowuje) (monitoruje) (aktualizuje)
+```
+
+1. **Commitujesz kod** do repozytorium GitHub
+2. **GitHub Actions** automatycznie buduje nowe obrazy Docker
+3. **Obrazy trafiają** do GitHub Container Registry (GHCR)
+4. **Watchtower** co 5 minut sprawdza czy są nowe wersje
+5. **Kontenery aktualizują się** automatycznie gdy pojawi się nowa wersja
+
 ## Wymagania
 
 - Docker zainstalowany
