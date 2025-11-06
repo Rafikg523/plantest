@@ -8,13 +8,13 @@ services:
       - "5000:5000"
     environment:
       - ASPNETCORE_ENVIRONMENT=Production
-      - ASPNETCORE_URLS=https://+:5000
       - ConnectionStrings__DefaultConnection=Data Source=/app/data/PlanQRDB.db
     env_file:
       - .env
     volumes:
       - ./data:/app/data
       - ./certs:/app/certs:ro
+      - dataprotection-keys:/root/.aspnet/DataProtection-Keys
     networks:
       - planqr-network
     restart: unless-stopped
@@ -36,3 +36,7 @@ services:
 networks:
   planqr-network:
     driver: bridge
+
+volumes:
+  dataprotection-keys:
+    driver: local
