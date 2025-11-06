@@ -1,5 +1,7 @@
 # PlanQR - Docker Setup Guide
 
+> 💡 **Looking for automatic GitHub updates?** See [PORTAINER-QUICKSTART.md](PORTAINER-QUICKSTART.md) and [PORTAINER.md](PORTAINER.md) for Portainer setup with auto-update!
+
 This guide explains how to run the PlanQR application using Docker and Docker Compose.
 
 ## Prerequisites
