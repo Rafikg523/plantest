@@ -1,6 +1,20 @@
 # PlanQR
 
-## Wymagany jest .NET w wersji 8.0.0 oraz NodeJS w wersji 22.16.0
+## 🐳 Uruchomienie z Docker (Zalecane)
+
+Aby uruchomić aplikację w Dockerze, zobacz:
+- [DOCKER-QUICKSTART-PL.md](PlanQR/DOCKER-QUICKSTART-PL.md) - Szybki start (Polski)
+- [DOCKER.md](PlanQR/DOCKER.md) - Pełna dokumentacja (English)
+
+**Szybki start:**
+```bash
+cd PlanQR
+./docker-start.sh
+```
+
+## Instalacja bez Docker
+
+### Wymagany jest .NET w wersji 8.0.0 oraz NodeJS w wersji 22.16.0
 [Dokumentacja projektu](https://github.com/igorbebenek/PlanQR/blob/main/Dokumentacja.adoc)
 ## Instalacja pakietów
 

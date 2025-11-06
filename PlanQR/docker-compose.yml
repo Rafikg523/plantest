@@ -1,0 +1,38 @@
+services:
+  api:
+    build:
+      context: .
+      dockerfile: API/Dockerfile
+    container_name: planqr-api
+    ports:
+      - "5000:5000"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+      - ASPNETCORE_URLS=https://+:5000
+      - ConnectionStrings__DefaultConnection=Data Source=/app/data/PlanQRDB.db
+    env_file:
+      - .env
+    volumes:
+      - ./data:/app/data
+      - ./certs:/app/certs:ro
+    networks:
+      - planqr-network
+    restart: unless-stopped
+
+  frontend:
+    build:
+      context: ./client-app
+      dockerfile: Dockerfile
+    container_name: planqr-frontend
+    ports:
+      - "80:80"
+      - "443:443"
+    depends_on:
+      - api
+    networks:
+      - planqr-network
+    restart: unless-stopped
+
+networks:
+  planqr-network:
+    driver: bridge

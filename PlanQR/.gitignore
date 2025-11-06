@@ -5,6 +5,7 @@
 
 
 # dotenv files
+.env
 .env.local
 
 # User-specific files
@@ -488,3 +489,8 @@ $RECYCLE.BIN/
 
 appsettings.Development.json
 PlanQRDB.db
+PlanQRDB.db-shm
+PlanQRDB.db-wal
+
+# Docker data directory
+data/
