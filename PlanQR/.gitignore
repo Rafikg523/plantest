@@ -494,3 +494,6 @@ PlanQRDB.db-wal
 
 # Docker data directory
 data/
+
+# SSL certificates (generated locally, should not be committed)
+certs/

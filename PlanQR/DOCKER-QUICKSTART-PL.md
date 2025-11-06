@@ -1,5 +1,7 @@
 # PlanQR - Docker Quick Start (Polski)
 
+> 💡 **Szukasz automatycznych aktualizacji z GitHub?** Zobacz [PORTAINER-QUICKSTART.md](PORTAINER-QUICKSTART.md) - uruchomienie przez Portainer z auto-update!
+
 ## Szybki Start z Dockerem 🐳
 
 ### 1. Wymagania

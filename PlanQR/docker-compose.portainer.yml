@@ -1,0 +1,50 @@
+services:
+  api:
+    image: ghcr.io/rafikg523/plantest/api:latest
+    container_name: planqr-api
+    ports:
+      - "5000:5000"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+      - ASPNETCORE_URLS=https://+:5000
+      - ConnectionStrings__DefaultConnection=Data Source=/app/data/PlanQRDB.db
+    env_file:
+      - .env
+    volumes:
+      - ./data:/app/data
+      - ./certs:/app/certs:ro
+    networks:
+      - planqr-network
+    restart: unless-stopped
+
+  frontend:
+    image: ghcr.io/rafikg523/plantest/frontend:latest
+    container_name: planqr-frontend
+    ports:
+      - "80:80"
+      - "443:443"
+    depends_on:
+      - api
+    networks:
+      - planqr-network
+    restart: unless-stopped
+
+  watchtower:
+    image: containrrr/watchtower:latest
+    container_name: planqr-watchtower
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    environment:
+      - WATCHTOWER_CLEANUP=true
+      # Poll interval in seconds: 300=5min (dev/test), 3600=1hour (prod), 86400=24hours (stable prod)
+      - WATCHTOWER_POLL_INTERVAL=300
+      - WATCHTOWER_INCLUDE_RESTARTING=true
+      - WATCHTOWER_INCLUDE_STOPPED=false
+    command: planqr-api planqr-frontend
+    restart: unless-stopped
+    networks:
+      - planqr-network
+
+networks:
+  planqr-network:
+    driver: bridge

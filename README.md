@@ -3,10 +3,14 @@
 ## 🐳 Uruchomienie z Docker (Zalecane)
 
 Aby uruchomić aplikację w Dockerze, zobacz:
-- [DOCKER-QUICKSTART-PL.md](PlanQR/DOCKER-QUICKSTART-PL.md) - Szybki start (Polski)
-- [DOCKER.md](PlanQR/DOCKER.md) - Pełna dokumentacja (English)
+- [DOCKER-QUICKSTART-PL.md](PlanQR/DOCKER-QUICKSTART-PL.md) - Szybki start lokalnie (Polski)
+- [DOCKER.md](PlanQR/DOCKER.md) - Pełna dokumentacja Docker (English)
 
-**Szybki start:**
+### 🚀 Portainer z automatycznymi aktualizacjami z GitHub ⭐
+- [PORTAINER-QUICKSTART.md](PlanQR/PORTAINER-QUICKSTART.md) - **Szybki start Portainer (5 kroków)**
+- [PORTAINER.md](PlanQR/PORTAINER.md) - Pełna dokumentacja Portainer
+
+**Szybki start lokalnie:**
 ```bash
 cd PlanQR
 ./docker-start.sh
