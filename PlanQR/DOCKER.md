@@ -24,6 +24,8 @@ cd PlanQR
 
 Enter a password when prompted and remember it for the next step.
 
+**Note**: The certificate generation script includes SubjectAlternativeName (SAN) extensions to comply with modern browser requirements and prevent certificate warnings.
+
 ### 3. Configure environment variables
 
 Copy the example environment files and edit them:
@@ -60,6 +62,7 @@ This will:
 - Build the frontend container
 - Start both services
 - Initialize the database
+- Create a persistent volume for ASP.NET Core Data Protection keys
 
 ### 6. Access the application
 
@@ -129,10 +132,16 @@ For production, it's recommended to use a reverse proxy like Nginx or Traefik in
 
 ### 4. Data persistence
 
-The database is stored in the `./data` directory, which is mounted as a volume. Make sure to:
-- Back up this directory regularly
+The following data is persisted across container restarts:
+
+1. **Database**: Stored in the `./data` directory, mounted as a volume
+2. **ASP.NET Core Data Protection Keys**: Stored in a Docker named volume (`dataprotection-keys`)
+
+Make sure to:
+- Back up the `./data` directory regularly
 - Set appropriate file permissions
 - Consider using a more robust database for production
+- The Data Protection keys volume ensures encrypted data (like cookies, tokens) remains valid across container restarts
 
 ### 5. Resource limits
 
@@ -157,6 +166,8 @@ If you see certificate errors:
 1. Ensure certificates are properly generated in `./certs/`
 2. Check that the PFX password matches in `.env`
 3. Verify certificate files have correct permissions
+
+**Note**: The certificate generation script now includes SubjectAlternativeName (SAN) extensions to comply with modern browser requirements and eliminate certificate warnings. If you have old certificates, regenerate them using `./generate-certs.sh`.
 
 ### Database errors
 
