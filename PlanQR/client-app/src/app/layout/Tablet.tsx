@@ -513,7 +513,6 @@ export default function Tablet() {
                   backgroundColor: event.color,
                   color: '#fff',
                 }}
-                onClick={() => {}}
               >
                 <div className="calendar-event-left">
                   <span>{event.startTime}<br /> - <br />{event.endTime}</span>
