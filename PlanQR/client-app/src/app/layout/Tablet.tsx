@@ -2,13 +2,11 @@ import { useEffect, useState, useRef } from 'react';
 import { useParams, useLocation } from 'react-router-dom';
 import './Tablet.css';
 import { fetchMessages } from '../services/messageService';
-import LogoWI from '../../assets/WI.jpg';
 import LogoZUT from '../../assets/ZUT_Logo.png';
 import {QRCodeCanvas}  from 'qrcode.react';
-import { get } from 'http';
 
 interface ScheduleEvent {
-  id: string;
+  id: number;
   startTime: string;
   endTime: string;
   description: string;
@@ -110,7 +108,6 @@ export default function Tablet() {
   const [scheduleItems, setScheduleItems] = useState<ScheduleEvent[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [selectedEvent, setSelectedEvent] = useState<ScheduleEvent | null>(null);
   const [calendarStartHour, setCalendarStartHour] = useState(6);
   const [scrollableStates, setScrollableStates] = useState<{ [key: number]: boolean }>({});
   const marqueeRefs = useRef<(HTMLDivElement | null)[]>([]);
@@ -294,9 +291,6 @@ export default function Tablet() {
         }
   
         setScheduleItems(sortedEvents);
-        if (sortedEvents.length > 0) {
-          setSelectedEvent(sortedEvents[0]);
-        }
         setIsLoading(false);
         setError(null);
       } catch (error) {
@@ -450,12 +444,7 @@ export default function Tablet() {
   
   useEffect(() => {
     if (!isLoading && !error && scheduleItems.length > 0) {
-      const currentEvent = findCurrentEvent();
-      if (currentEvent) {
-        setSelectedEvent(currentEvent);
-      } else {
-        setSelectedEvent(scheduleItems[0]);
-      }
+      findCurrentEvent();
     }
   }, [scheduleItems, isLoading, error]);
 
@@ -524,7 +513,7 @@ export default function Tablet() {
                   backgroundColor: event.color,
                   color: '#fff',
                 }}
-                onClick={() => setSelectedEvent(event)}
+                onClick={() => {}}
               >
                 <div className="calendar-event-left">
                   <span>{event.startTime}<br /> - <br />{event.endTime}</span>

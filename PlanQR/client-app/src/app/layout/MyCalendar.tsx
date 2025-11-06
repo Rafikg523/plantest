@@ -18,10 +18,6 @@ export default function MyCalendar() {
   const [currentDates, setCurrentDates] = useState({ start: '', end: '' });
 
   const [messages, setMessages] = useState<any[]>([]);
-  const [newMessage, setNewMessage] = useState("");
-  const [selectedLessonId, setSelectedLessonId] = useState<number | null>(null);
-  const [login, setLogin] = useState<string | null>(null);
-  const [lessonLogin, setLessonLogin] = useState<string | null>(null);
 
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [selectedEvent, setSelectedEvent] = useState<EventApi | null>(null);
@@ -40,8 +36,6 @@ export default function MyCalendar() {
     const lessonId = event.extendedProps.id;
 
     if (lessonId) {
-      setSelectedLessonId(lessonId);
-      setLessonLogin(event.extendedProps.login);
       fetchMessages(lessonId)
         .then(setMessages)
         .catch((err) => console.error("Error fetching messages:", err));

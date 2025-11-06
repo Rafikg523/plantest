@@ -1,1 +1,1 @@
-export const allowedLogins = [];
+export const allowedLogins: string[] = [];

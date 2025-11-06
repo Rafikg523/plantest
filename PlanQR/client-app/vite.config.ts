@@ -13,34 +13,37 @@ export default defineConfig(({ mode }) => {
 
   const siteUrl = env.VITE_SITE_URL // Np. https://planqr.wi.zut.edu.pl
 
-
-  return {
-    server: {
-      https: {
-        key: fs.readFileSync(path.resolve(__dirname,'../certs/cert.key')),
-        cert: fs.readFileSync(path.resolve(__dirname, '../certs/cert.pem')),
+  // Only use HTTPS for development server
+  const isDev = mode === 'development'
+  const serverConfig = isDev ? {
+    https: {
+      key: fs.readFileSync(path.resolve(__dirname,'../certs/cert.key')),
+      cert: fs.readFileSync(path.resolve(__dirname, '../certs/cert.pem')),
+    },
+    port: 443,
+    host: true,
+    proxy: {
+      '/schedule_student.php': {
+        target: 'https://plan.zut.edu.pl', // Możesz dodać też to do .env, jeśli chcesz
+        changeOrigin: true,
+        secure: false,
+        rewrite: (urlPath: string) => urlPath.replace(/^\/schedule_student.php/, '/schedule_student.php'),
       },
-      port: 443,
-      host: true,
-      proxy: {
-        '/schedule_student.php': {
-          target: 'https://plan.zut.edu.pl', // Możesz dodać też to do .env, jeśli chcesz
-          changeOrigin: true,
-          secure: false,
-          rewrite: (path) => path.replace(/^\/schedule_student.php/, '/schedule_student.php'),
-        },
-        '/api': {
-          target: siteUrl,
-          changeOrigin: true,
-          secure: false,
-          rewrite: (path) => path.replace(/^\/api/, ''),
-        },
-      },
-      hmr: {
-        host: new URL(siteUrl).hostname, // Używa samej domeny np. planqr.wi.zut.edu.pl
-        protocol: 'wss',
+      '/api': {
+        target: siteUrl,
+        changeOrigin: true,
+        secure: false,
+        rewrite: (urlPath: string) => urlPath.replace(/^\/api/, ''),
       },
     },
+    hmr: {
+      host: new URL(siteUrl).hostname, // Używa samej domeny np. planqr.wi.zut.edu.pl
+      protocol: 'wss',
+    },
+  } : {}
+
+  return {
+    server: serverConfig,
     plugins: [react()],
   }
 })

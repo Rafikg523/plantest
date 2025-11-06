@@ -41,7 +41,7 @@ const DeviceList = () => {
   return (
 <div className="device-list">
   <h2>Lista urządzeń</h2>
-  <table border="1" style={{ width: '100%', borderCollapse: 'collapse' }}>
+  <table border={1} style={{ width: '100%', borderCollapse: 'collapse' }}>
     <thead>
       <tr>
         <th>ID</th>
