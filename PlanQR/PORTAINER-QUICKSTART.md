@@ -80,10 +80,12 @@ Aplikacja działa pod:
 ## Automatyczne aktualizacje
 
 Watchtower będzie:
-- ✅ Sprawdzać aktualizacje co 5 minut
+- ✅ Sprawdzać aktualizacje co 5 minut (domyślnie - dla testów)
 - ✅ Automatycznie pobierać nowe wersje
 - ✅ Restartować aplikację z nowymi wersjami
 - ✅ Usuwać stare obrazy
+
+💡 **Wskazówka**: Dla produkcji zwiększ interwał do 1 godziny lub więcej (patrz sekcja "Konfiguracja Watchtower" poniżej).
 
 ## Sprawdź czy działa
 

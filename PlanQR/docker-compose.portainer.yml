@@ -36,6 +36,7 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
     environment:
       - WATCHTOWER_CLEANUP=true
+      # Poll interval in seconds: 300=5min (dev/test), 3600=1hour (prod), 86400=24hours (stable prod)
       - WATCHTOWER_POLL_INTERVAL=300
       - WATCHTOWER_INCLUDE_RESTARTING=true
       - WATCHTOWER_INCLUDE_STOPPED=false

@@ -138,10 +138,12 @@ chmod +x generate-certs.sh
 ## Automatyczne Aktualizacje
 
 Watchtower jest już skonfigurowany w `docker-compose.portainer.yml` i będzie:
-- Sprawdzać nowe wersje obrazów co 5 minut (300 sekund)
+- Sprawdzać nowe wersje obrazów co 5 minut (300 sekund) - **dla testów i developmentu**
 - Automatycznie pobierać nowe obrazy
 - Restartować kontenery z nowymi wersjami
 - Usuwać stare obrazy po aktualizacji
+
+⚠️ **Dla produkcji**: Rozważ zwiększenie interwału do 3600 sekund (1 godzina) lub więcej, aby zmniejszyć obciążenie sieci i zasobów. Alternatywnie, użyj webhooków dla natychmiastowych aktualizacji (patrz sekcja "Webhook" poniżej).
 
 ### Monitorowanie Watchtower
 
@@ -157,8 +159,11 @@ Możesz dostosować ustawienia Watchtower w pliku `docker-compose.portainer.yml`
 ```yaml
 watchtower:
   environment:
-    - WATCHTOWER_POLL_INTERVAL=300  # Interwał sprawdzania w sekundach (300 = 5 minut)
-    - WATCHTOWER_CLEANUP=true       # Usuń stare obrazy po aktualizacji
+    - WATCHTOWER_POLL_INTERVAL=300   # Interwał sprawdzania w sekundach
+                                      # 300 = 5 minut (development/test)
+                                      # 3600 = 1 godzina (produkcja)
+                                      # 86400 = 24 godziny (stabilna produkcja)
+    - WATCHTOWER_CLEANUP=true        # Usuń stare obrazy po aktualizacji
     - WATCHTOWER_NOTIFICATIONS=email # Powiadomienia email (wymaga dodatkowej konfiguracji)
 ```
 
